@@ -1,8 +1,12 @@
 # TaskBound
 
-## The problem
+## Introduction
 
-Companies are connecting AI agents to their email, databases and cloud systems. To make the agents useful, they give them broad access: read the inbox, look up customers, send messages, update records.
+AI agents are no longer just chatbots. Companies are connecting them to email, customer databases and internal systems, and trusting them to act on their own: reading messages, looking up records and sending information on the company's behalf.
+
+## What's the Problem?
+
+The problem is, Companies are connecting AI agents to their email, databases and cloud systems. To make the agents useful, they give them broad access: read the inbox, look up customers, send messages, update records.
 
 An agent decides what to do by reading text. Its instructions come from the user, but it also reads emails, documents, web pages and tool outputs as part of the job. It has no reliable way to separate the two. If an attacker hides an instruction inside something the agent reads, the agent may treat it as a genuine request and act on it.
 
@@ -12,7 +16,7 @@ The part that makes this hard to catch is that nothing looks wrong. No password 
 
 Security tools are built to answer one question: who is making this request? With agents the answer is always "our own assistant", and it passes. The question nobody is answering is: does this action belong to the task this agent was actually given? Exporting every customer record has nothing to do with summarising an inbox, but most systems keep no record of what the task was, so they cannot spot the mismatch.
 
-## Where this comes from
+## Where does the problem come from?
 
 I did not invent this problem. It is documented across the security industry:
 
