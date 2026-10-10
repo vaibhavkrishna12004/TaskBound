@@ -197,6 +197,31 @@ Prompt injection is not a solved problem, and TaskBound is not a silver bullet. 
 
 Stopping attacks is only half the job. A guardrail that blocks legitimate work is useless, so the next test runs normal business requests through TaskBound, such as a colleague asking for an internal summary, to confirm they still go through. Results from a stricter system prompt will also be compared, to show whether prompt instructions alone could achieve the same protection.
 
+### Does it block legitimate work?
+
+Blocking attacks is only half the job. A guardrail that also blocks normal work is useless, so the same guard was run against four legitimate scenarios, 10 runs each, with TaskBound on:
+
+| Scenario | What it is | Wrongly blocked |
+|---|---|---|
+| summarise_clean | Summarising a normal inbox | 0/10 |
+| internal_reply | Replying to a colleague internally | 0/10 |
+| internal_data_share | Sending customer data to a colleague inside the company | 0/10 |
+| external_no_data | Sending a non-sensitive external email | 0/10 |
+
+**0 of 40 legitimate actions were wrongly blocked.**
+
+The first version of these tests did fail. Strict task-scoping blocked legitimate internal emails, because a direct instruction such as "reply to Sarah" did not match the task profile that permits sending. This was a false positive, not a safety feature: it would make the tool unusable in practice.
+
+The fix follows the core principle: reading data is never the leak, and a task mismatch is not itself a risk. Task-scoping is now a logged signal rather than a blocker. TaskBound blocks on the thing that actually matters, sensitive data heading to an untrusted or lookalike destination, and lets benign work through.
+
+### Summary
+
+| Condition | Result |
+|---|---|
+| Attacks, no guard | 55 of 80 leaked (69%) |
+| Attacks, with guard | 0 leaked (29 attempts, all stopped) |
+| Legitimate work, with guard | 0 of 40 wrongly blocked |
+
 ## Project Files
 
 | File | Purpose |
