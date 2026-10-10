@@ -193,13 +193,9 @@ The agent still tried. TaskBound does not make the model smarter or change its j
 
 Prompt injection is not a solved problem, and TaskBound is not a silver bullet. It is a layered mitigation that limits what a tricked agent can actually do. Linking an action to the email that caused it currently relies on matching addresses, which a determined attacker may find ways around. These limits are tested and documented as the project develops.
 
-### Still to test
-
-Stopping attacks is only half the job. A guardrail that blocks legitimate work is useless, so the next test runs normal business requests through TaskBound, such as a colleague asking for an internal summary, to confirm they still go through. Results from a stricter system prompt will also be compared, to show whether prompt instructions alone could achieve the same protection.
-
 ### Does it block legitimate work?
 
-Blocking attacks is only half the job. A guardrail that also blocks normal work is useless, so the same guard was run against four legitimate scenarios, 10 runs each, with TaskBound on:
+Stopping attacks is only half the job. A guardrail that also blocks normal work is useless, so the same guard was run against four legitimate scenarios, 10 runs each, with TaskBound on.
 
 | Scenario | What it is | Wrongly blocked |
 |---|---|---|
@@ -228,7 +224,8 @@ The fix follows the core principle: reading data is never the leak, and a task m
 |---|---|
 | agent.py | The simulated company assistant |
 | attack.py | Runs every attack repeatedly and records the results |
-| guard.py | TaskBound itself |
+| benign.py | Runs legitimate requests to check they are not wrongly blocked |
+| guard.py | The TaskBound guard — core source code |
 | policy.yaml | The configurable rules |
 | results/ | Raw logs from every test run |
 | logs/ | TaskBound's audit trail |
