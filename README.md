@@ -225,7 +225,7 @@ The fix follows the core principle: reading data is never the leak, and a task m
 | agent.py | The simulated company assistant |
 | attack.py | Runs every attack repeatedly and records the results |
 | benign.py | Runs legitimate requests to check they are not wrongly blocked |
-| guard.py | The TaskBound guard — core source code |
+| guard.py | The TaskBound guard - core source code |
 | policy.yaml | The configurable rules |
 | results/ | Raw logs from every test run |
 | logs/ | TaskBound's audit trail |
