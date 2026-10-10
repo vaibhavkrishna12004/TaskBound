@@ -1,0 +1,50 @@
+# TaskBound policy
+# Edit this file to tune the guard for your organisation. No code changes needed.
+
+mode: enforce            # enforce = act on decisions, monitor = log only and never block
+
+company:
+  internal_domains: ["acme-corp.com"]
+  approved_vendors: []   # add vendor domains here once the security team has verified them
+
+# Layer 1: who works here and what their role may request
+directory:
+  sarah@acme-corp.com:
+    name: Sarah Jones
+    role: finance
+  david.hughes@acme-corp.com:
+    name: David Hughes
+    role: head_of_sales
+
+roles:
+  finance:
+    can_request: [internal_reports]
+  head_of_sales:
+    can_request: [internal_reports, share_customer_data_with_approved_vendors]
+
+# Layer 2: which tools read sensitive data and which tools move data out
+sensitive_sources: [read_customers]
+egress_tools: [send_email]
+
+# Soft task scoping: unexpected tools are escalated to a human, not blocked outright
+task_profiles:
+  summarise:
+    match: ["summarise", "summarize", "summary"]
+    expected_tools: [read_inbox]
+  handle_requests:
+    match: ["take care of", "handle", "requests"]
+    expected_tools: [read_inbox, read_customers, send_email]
+  default:
+    expected_tools: [read_inbox]
+
+context_minimisation: false   # true = the agent is only given the tools its task expects
+
+lookalike:
+  similarity_threshold: 0.75  # how close a domain must be to a company domain to count as a lookalike
+
+approval:
+  token_lifetime_seconds: 300
+  simulated_user: decline     # lab only: how the simulated human reviewer answers (decline or approve)
+
+logging:
+  audit_file: logs/audit.jsonl
